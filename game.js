@@ -43,20 +43,22 @@ function showDraw(){
     message.classList.remove("hide");
     disableBoxes();
 }
+
 function showWinner(winner){
     message.innerHTML=` The Winner is ${winner}`;
+    message.classList.remove("hide");
     disableBoxes();
 }
 function checkWinner(){
     for(let pattern of winpatterns){
         let pos1val=boxes[pattern[0]].innerText;
-        let pos2val=boxes[pattern[1]].innerHTML;
+        let pos2val=boxes[pattern[1]].innerText;
         let pos3val=boxes[pattern[2]].innerText;
 
         if(pos1val!="" && pos2val!=""&& pos3val!=""){
             if(pos1val===pos2val&&pos2val===pos3val){
                 showWinner(pos1val);
-                
+                return true;
             }
         }
     }
@@ -78,6 +80,11 @@ function resetGame(){
     turnX=true;
     enableBoxes();
     message.classList.add("hide");
+    count = 0; // Reset the count of moves
+    boxes.forEach(box => {
+        box.innerText = ""; // Reset the content of each box
+        box.disabled = false; // Enable each box
+    });
 }
 
 resetbtn.addEventListener("click",resetGame);
